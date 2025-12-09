@@ -1,0 +1,125 @@
+:root{
+  --maxw:1200px;
+  --accent:#0A84FF;
+  --muted:#6b6b6b;
+  --bg:#ffffff;
+  --card:#fafafa;
+  --gold:#efe0a8;
+  --radius:12px;
+  --gap:24px;
+  font-family: "UthmaniCustom", -apple-system, "Segoe UI", Roboto, "Noto Naskh Arabic", "Amiri", "Scheherazade", sans-serif;
+  color-scheme: light;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#111;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-y:scroll;
+}
+
+.container{max-width:var(--maxw);margin:0 auto;padding:40px 24px}
+
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 24px;
+  border-bottom:1px solid #eee;
+  position:sticky;
+  top:0;
+  background:linear-gradient(0deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+  backdrop-filter: blur(4px);
+  z-index:20;
+}
+
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:0.6px;font-size:18px}
+.logo-text{font-weight:700;font-size:14px}
+.main-nav{display:flex;gap:18px;align-items:center}
+.nav-item{color:var(--muted);text-decoration:none;padding:8px;border-radius:8px}
+.nav-item:hover{color:#000;box-shadow:inset 0 -2px 0 var(--accent);}
+
+.btn{padding:8px 14px;border-radius:999px;font-weight:600;border:0;cursor:pointer}
+.btn-ghost{background:transparent;color:var(--muted)}
+.btn-outline{background:transparent;border:1px solid #e6e6e6;color:var(--muted)}
+.btn-primary{background:var(--accent);color:white;box-shadow:0 6px 20px rgba(10,132,255,0.14)}
+
+.d-none{display:none}
+
+.page{padding:48px 0}
+.hero{padding:48px 0}
+.hero-left{padding-right:32px}
+.hero-title{font-size:36px;margin:10px 0 6px}
+.hero-sub{color:var(--muted);margin:0 0 18px}
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 520px;
+  gap: 40px;
+  align-items: center;
+}
+.hero-cta{margin-bottom:12px}
+.quote{margin:20px 0;padding:18px;border-left:3px solid var(--accent);color:var(--muted);background:#fff;border-radius:10px}
+
+.progress-widget{margin-top:18px;padding:16px;border-radius:12px;background:var(--card);display:inline-block}
+.muted{color:var(--muted)}
+.tiny{font-size:12px;opacity:0.85}
+.mt{margin-top:16px}
+
+/* Surah list */
+.page-header{display:flex;gap:16px;align-items:center;justify-content:space-between}
+.search{padding:10px;border-radius:12px;border:1px solid #eee;min-width:220px}
+.surah-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px}
+.surah-card{padding:18px;border-radius:12px;background:var(--card);cursor:pointer;min-height:90px;transition:transform .12s ease}
+.surah-card:hover{transform:translateY(-6px)}
+.surah-title{font-weight:600}
+.surah-meta{color:var(--muted);margin-top:6px}
+
+/* Ayah view */
+.ayah-container{padding:24px 12px;display:flex;flex-direction:column;gap:12px}
+.ayah{
+  padding:16px;border-radius:10px; background:transparent; transition:all .18s ease;line-height:1.9;
+  font-size:22px; /* Arabic size */
+  direction:rtl;
+}
+.ayah.faded{opacity:0.32}
+.ayah.active{background:linear-gradient(90deg, rgba(10,132,255,0.06), rgba(10,132,255,0.02));border-right:6px solid var(--accent)}
+.ayah.memorized{background:var(--gold);opacity:0.95}
+
+/* Sticky bottom */
+.sticky-bar{
+  position:sticky;bottom:0;background:transparent;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:24px;
+}
+
+/* Modal */
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,10,10,0.24)}
+.modal.hidden{display:none}
+.modal-panel{background:#fff;padding:22px;border-radius:12px;min-width:320px;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.14)}
+.modal-close{position:absolute;right:12px;top:12px;border:0;background:none;font-size:20px}
+input[type="email"],input[type="password"]{width:100%;padding:12px;border-radius:10px;border:1px solid #eee;margin:8px 0}
+
+/* footer */
+.site-footer{border-top:1px solid #eee;padding:24px 0;margin-top:40px;text-align:center}
+.hidden{display:none}
+
+/* utility */
+.left{display:flex;align-items:center;gap:12px}
+.right{display:flex;align-items:center;gap:12px}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Responsive */
+@media (max-width:1000px){
+  .home-grid{grid-template-columns:1fr; text-align:center; padding:0 12px}
+  .hero-left{padding-right:0}
+  .hero-image{max-width:420px;margin:20px auto 0}
+  .site-header{padding:12px}
+  .container{padding:20px}
+  .hero-title{font-size:28px}
+  .ayah{font-size:20px}
+}

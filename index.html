@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ar" dir="rtl"> <!-- rtl so native reading direction is right-to-left -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QMemorize — Minimal</title>
+
+  <!-- Uthmani font: replace with your actual font file under /assets/fonts and update the src if available -->
+  <style>
+    @font-face{
+      font-family: "UthmaniCustom";
+      /* Replace with actual path to your Uthmani font if you have it */
+      src: local("Scheherazade"), local("Noto Naskh Arabic"), url("/assets/fonts/uthmani.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root{
+      --maxw:1200px;
+      --accent:#0A84FF;
+      --muted:#6b6b6b;
+      --bg:#ffffff;
+      --card:#fafafa;
+      --gold:#efe0a8;
+      --radius:12px;
+      --gap:24px;
+      font-family: "UthmaniCustom", -apple-system, "Segoe UI", Roboto, "Noto Naskh Arabic", "Amiri", "Scheherazade", sans-serif;
+      color-scheme: light;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:#111}
+  </style>
+
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Firebase compat SDKs used by app.js -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script type="module" src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="left">
+      <!-- Inline minimal logo SVG (Option B style) -->
+      <div id="logo" class="logo" role="link" tabindex="0" aria-label="QMemorize">
+        <svg width="44" height="44" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="96" height="96" rx="18" fill="#fff" stroke="#F0F4FF" stroke-width="2"/>
+          <path d="M70 30 C60 26 56 42 40 44 C28 46 28 62 44 62 C56 62 66 46 66 46" fill="none" stroke="#0A84FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo-text">QMemorize</span>
+      </div>
+    </div>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-item" href="#" data-route="home">الرئيسية</a>
+      <a class="nav-item" href="#" data-route="memorize">حفظ</a>
+      <!-- Revision link will be inserted dynamically when appropriate -->
+      <span id="nav-right"></span>
+    </nav>
+
+    <div class="right">
+      <button id="btn-login" class="btn btn-outline">Login</button>
+      <button id="btn-logout" class="btn btn-ghost d-none">Logout</button>
+    </div>
+  </header>
+
+  <main id="app">
+    <!-- HOME -->
+    <section id="page-home" class="page container">
+      <div class="hero">
+        <div class="home-grid">
+
+          <!-- LEFT: TEXT -->
+          <div class="hero-left">
+            <!-- Reuse logo small -->
+            <div style="display:flex;align-items:center;gap:12px;">
+              <svg width="46" height="46" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2" y="2" width="96" height="96" rx="18" fill="#fff" stroke="#F0F4FF" stroke-width="2"/>
+                <path d="M70 30 C60 26 56 42 40 44 C28 46 28 62 44 62 C56 62 66 46 66 46" fill="none" stroke="#0A84FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div style="line-height:1;">
+                <div style="font-weight:700;font-size:16px">QMemorize</div>
+                <div style="font-size:11px;color:var(--muted)">حفظ القرآن بسهولة</div>
+              </div>
+            </div>
+
+            <h1 class="hero-title">Memorize Qur’an With Calm</h1>
+            <p class="hero-sub">3 ayahs a day — steady, sustainable progress.</p>
+
+            <div class="hero-cta">
+              <button id="start-memorize" class="btn btn-primary hero-btn">Start Memorizing</button>
+            </div>
+
+            <blockquote class="quote" aria-hidden="false">
+              “Whoever takes a path seeking knowledge, Allah will make easy for him a path to Paradise.”
+            </blockquote>
+
+            <div id="progress-widget" class="progress-widget d-none" aria-live="polite">
+              <div>Ayahs memorized this week: <strong id="weekly-count">0</strong></div>
+              <div>Streak: <strong id="streak">0</strong> days</div>
+              <div id="continue-line" class="muted"></div>
+            </div>
+          </div>
+
+          <!-- RIGHT: HERO ILLUSTRATION (inline SVG) -->
+          <div class="hero-right" aria-hidden="true">
+            <!-- Inline hero illustration (from earlier SVG). This keeps everything in a single file. -->
+            <svg width="520" height="360" viewBox="0 0 1400 900" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract Quran geometric illustration">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/>
+                  <stop offset="1" stop-color="#F7FBFF" stop-opacity="1"/>
+                </linearGradient>
+                <linearGradient id="accent" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#F6E8B5"/>
+                  <stop offset="1" stop-color="#F0D98A"/>
+                </linearGradient>
+                <filter id="f1" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="18" stdDeviation="40" flood-color="#0A84FF" flood-opacity="0.06"/>
+                </filter>
+                <filter id="f2" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="20" stdDeviation="30" flood-color="#000000" flood-opacity="0.06"/>
+                </filter>
+                <pattern id="geom" width="48" height="48" patternUnits="userSpaceOnUse">
+                  <rect width="48" height="48" fill="none"/>
+                  <circle cx="24" cy="8" r="2.5" fill="#EAF3FF" />
+                  <circle cx="8" cy="24" r="2.5" fill="#EAF3FF" />
+                  <circle cx="40" cy="24" r="2.5" fill="#EAF3FF" />
+                  <circle cx="24" cy="40" r="2.5" fill="#EAF3FF" />
+                </pattern>
+              </defs>
+
+              <!-- Background -->
+              <rect width="1400" height="900" fill="url(#g1)"/>
+
+              <!-- Subtle geometric texture -->
+              <rect x="60" y="60" width="1280" height="780" rx="28" fill="url(#geom)" opacity="0.55"/>
+
+              <!-- Large soft card / paper -->
+              <rect x="110" y="120" width="820" height="620" rx="28" fill="white" filter="url(#f2)" />
+
+              <!-- Gold rounded shape (abstract 'page' hint) -->
+              <g transform="translate(980,180) rotate(5)">
+                <ellipse cx="0" cy="0" rx="210" ry="260" fill="url(#accent)" opacity="0.95" filter="url(#f1)"/>
+                <path d="M-80,-40 C-30,-80 110,-110 170,-80 C230,-50 220,60 150,120 C80,180 -60,200 -140,140 C-220,80 -210,-10 -80,-40 Z" fill="#fff" opacity="0.08"/>
+              </g>
+
+              <!-- Stylized device mockup (subtle) -->
+              <g transform="translate(260,200)">
+                <rect x="0" y="0" width="520" height="360" rx="22" fill="#F8FAFF" stroke="#EFF4FF" stroke-width="1.2" />
+                <!-- screen inner -->
+                <rect x="26" y="20" width="468" height="320" rx="12" fill="white" />
+
+                <!-- small lines to hint at highlighted ayahs -->
+                <g transform="translate(46,46)" fill="#0A84FF" opacity="0.08">
+                  <rect x="0" y="0" width="380" height="36" rx="8"/>
+                  <rect x="0" y="56" width="380" height="36" rx="8"/>
+                  <rect x="0" y="112" width="380" height="36" rx="8"/>
+                </g>
+
+                <!-- faint text strokes (for aesthetic, not actual Arabic) -->
+                <g transform="translate(46,46)" opacity="0.28" fill="#111">
+                  <rect x="0" y="0" width="360" height="8" rx="4"/>
+                  <rect x="0" y="28" width="340" height="8" rx="4"/>
+                  <rect x="0" y="84" width="320" height="8" rx="4"/>
+                </g>
+              </g>
+
+              <!-- Fine accent dots -->
+              <circle cx="1180" cy="680" r="6" fill="#F0D98A" opacity="0.9"/>
+              <circle cx="1250" cy="620" r="4" fill="#EAF3FF" opacity="0.85"/>
+
+              <!-- Decorative border faint -->
+              <rect x="60" y="60" width="1280" height="780" rx="28" fill="none" stroke="#EFF6FF" stroke-width="1" />
+
+              <title>Abstract geometric illustration suggesting Quran page and app mockup</title>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SURAH LIST -->
+    <section id="page-memorize" class="page container hidden">
+      <div class="page-header">
+        <h2>Choose a Surah</h2>
+        <input id="search-surah" class="search" placeholder="Search surah..." aria-label="Search surah" />
+      </div>
+
+      <div id="surah-list" class="surah-list" role="list"></div>
+    </section>
+
+    <!-- AYAH VIEW -->
+    <section id="page-ayah" class="page container hidden" dir="rtl">
+      <div class="page-header">
+        <button id="back-to-surahs" class="btn btn-ghost">&larr;</button>
+        <h2 id="ayah-surah-title">Surah</h2>
+        <div class="muted" id="today-indicator">Today's: 1–3</div>
+      </div>
+
+      <div id="ayah-container" class="ayah-container" aria-live="polite"></div>
+
+      <div class="sticky-bar">
+        <div class="left-actions">
+          <button id="prev-3" class="btn btn-ghost">Prev</button>
+        </div>
+        <div class="center-actions">
+          <button id="play-audio" class="btn btn-outline">Play</button>
+        </div>
+        <div class="right-actions">
+          <button id="mark-memorized" class="btn btn-primary">Mark Today's Ayahs Memorized</button>
+          <button id="next-3" class="btn btn-ghost">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVISION -->
+    <section id="page-revision" class="page container hidden">
+      <div class="page-header">
+        <h2>Revision</h2>
+        <select id="week-select" class="select"></select>
+      </div>
+
+      <div id="revision-list"></div>
+      <div id="start-week-session" class="mt">
+        <button id="btn-start-week" class="btn btn-primary">Start Weekly Revision</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- LOGIN MODAL -->
+  <div id="login-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <div class="modal-panel">
+      <h3 id="login-title">Sign in to QMemorize</h3>
+
+      <form id="login-form" autocomplete="on">
+        <label class="sr-only" for="email">Email</label>
+        <input id="email" type="email" placeholder="Email address" required />
+
+        <label class="sr-only" for="password">Password</label>
+        <input id="password" type="password" placeholder="Password" required />
+
+        <div class="form-actions" style="display:flex;gap:10px;align-items:center">
+          <button type="submit" class="btn btn-primary">Login</button>
+          <button id="btn-google" type="button" class="btn btn-outline">Continue with Google</button>
+        </div>
+
+        <div class="muted tiny mt">
+          <a id="forgot-pw" href="#">Forgot password?</a>
+        </div>
+      </form>
+
+      <button id="close-login" class="modal-close" aria-label="Close">&times;</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© QMemorize</small>
+      <nav class="muted tiny">
+        <a href="#">About</a> · <a href="#">Privacy</a> · <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
