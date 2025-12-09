@@ -38,36 +38,31 @@
   <script type="module" src="app.js" defer></script>
 </head>
 <body>
-  <header class="site-header site-header-centered" role="banner">
-  <div class="container header-inner">
-    <!-- Left: small spacer so center stays centered -->
-    <div class="header-left" aria-hidden="true"></div>
-
-    <!-- Center: Logo + primary nav -->
-    <div class="header-center">
-      <div class="logo-centered" role="link" tabindex="0" aria-label="QMemorize home" onclick="location.href='#';">
+  <header class="site-header" role="banner">
+    <div class="left">
+      <!-- Inline minimal logo SVG (Option B style) -->
+      <div id="logo" class="logo" role="link" tabindex="0" aria-label="QMemorize">
         <svg width="44" height="44" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="2" y="2" width="96" height="96" rx="18" fill="#fff" stroke="#F0F4FF" stroke-width="2"/>
           <path d="M70 30 C60 26 56 42 40 44 C28 46 28 62 44 62 C56 62 66 46 66 46" fill="none" stroke="#0A84FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span class="logo-text-centered">QMemorize</span>
+        <span class="logo-text">QMemorize</span>
       </div>
-
-      <nav class="main-nav-centered" aria-label="Primary">
-        <a class="nav-item centered" href="#" data-route="home">Home</a>
-        <a class="nav-item centered" href="#" data-route="memorize">Practice</a>
-        <!-- Revision menu inserted dynamically for logged-in users -->
-        <span id="nav-right" class="nav-right-centered"></span>
-      </nav>
     </div>
 
-    <!-- Right: login / profile -->
-    <div class="header-right">
-      <button id="btn-login" class="btn btn-ghost">Login</button>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-item" href="#" data-route="home">الرئيسية</a>
+      <a class="nav-item" href="#" data-route="memorize">حفظ</a>
+      <!-- Revision link will be inserted dynamically when appropriate -->
+      <span id="nav-right"></span>
+    </nav>
+
+    <div class="right">
+      <button id="btn-login" class="btn btn-outline">Login</button>
       <button id="btn-logout" class="btn btn-ghost d-none">Logout</button>
     </div>
-  </div>
-</header>
+  </header>
+
   <main id="app">
     <!-- HOME -->
     <section id="page-home" class="page container">
